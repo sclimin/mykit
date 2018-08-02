@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="mk_mask" format="reference" />
+    <attr name="mk_mask_mode" format="enum">
+        <enum name="none" value="-1" />
+        <enum name="src" value="0" />
+        <enum name="dst" value="1" />
+        <enum name="src_in" value="2" />
+        <enum name="dst_in" value="3" />
+        <enum name="src_atop" value="4" />
+        <enum name="dst_atop" value="5" />
+    </attr>
+
+    <declare-styleable name="FrameLayout">
+        <attr name="mk_mask" />
+        <attr name="mk_mask_mode" />
+    </declare-styleable>
+</resources>

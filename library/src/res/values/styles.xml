@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MK_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
+    <style name="MK_Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:state_window_focused">false</item>
+    </style>
+</resources>
