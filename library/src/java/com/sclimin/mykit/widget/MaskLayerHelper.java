@@ -27,6 +27,7 @@ final class MaskLayerHelper {
     private final Drawable mMask;
     private final Paint mPaint;
     private final Xfermode mXfermode;
+    private final boolean mShowEditMode;
 
     MaskLayerHelper(View view, AttributeSet set, int defStyleAttr) {
         final Context context = view.getContext();
@@ -36,12 +37,14 @@ final class MaskLayerHelper {
 
         final int[] attrs = {
                 R.attr.mk_mask,
-                R.attr.mk_mask_mode
+                R.attr.mk_mask_mode,
+                R.attr.mk_show_edit_mode
         };
 
         TypedArray ta = context.obtainStyledAttributes(set, attrs, defStyleAttr, 0);
         this.mMask = ta.getDrawable(0);
         int maskMode = ta.getInt(1, -1);
+        mShowEditMode = ta.getBoolean(2, false);
         ta.recycle();
 
         switch (maskMode) {
@@ -73,10 +76,6 @@ final class MaskLayerHelper {
         this.mPaint.setFilterBitmap(true);
         this.mPaint.setAntiAlias(true);
         this.mPaint.setXfermode(mXfermode);
-
-//        if (mView.isInEditMode()) {
-//            mView.setLayerType(View.LAYER_TYPE_SOFTWARE, mPaint);
-//        }
     }
 
     public void sizeChange(int w, int h) {
@@ -86,7 +85,7 @@ final class MaskLayerHelper {
     }
 
     public void draw(Canvas canvas, DrawSuper drawSuper) {
-        if (mMask != null && mXfermode != null) {
+        if (mMask != null && mXfermode != null && (!mView.isInEditMode() || mShowEditMode)) {
             final Rect bounds = mMask.getBounds();
 
             canvas.saveLayer(bounds.left, bounds.top, bounds.right, bounds.bottom,
