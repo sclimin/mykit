@@ -38,7 +38,6 @@ public class MaskImageView extends AppCompatImageView {
 
     @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas);
         mMaskHelper.draw(canvas, super::draw);
     }
 }
