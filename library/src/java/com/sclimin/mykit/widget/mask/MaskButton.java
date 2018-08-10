@@ -1,4 +1,4 @@
-package com.sclimin.mykit.widget;
+package com.sclimin.mykit.widget.mask;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 
 public class MaskButton extends AppCompatButton {
 
-    private final MaskLayerHelper mMaskHelper;
+    private final MaskDelegate mMaskDelegate;
 
     public MaskButton(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -21,24 +21,24 @@ public class MaskButton extends AppCompatButton {
 
     public MaskButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mMaskHelper = new MaskLayerHelper(this, attrs, defStyleAttr);
-        mMaskHelper.drawableState(getDrawableState());
+        mMaskDelegate = new MaskDelegate(this, attrs, defStyleAttr);
+        mMaskDelegate.drawableState(getDrawableState());
     }
 
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        mMaskHelper.drawableState(getDrawableState());
+        mMaskDelegate.drawableState(getDrawableState());
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int ow, int oh) {
         super.onSizeChanged(w, h, ow, oh);
-        mMaskHelper.sizeChange(w, h);
+        mMaskDelegate.sizeChange(w, h);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        mMaskHelper.draw(canvas, super::draw);
+        mMaskDelegate.draw(canvas, super::draw);
     }
 }

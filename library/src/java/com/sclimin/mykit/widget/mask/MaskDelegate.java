@@ -1,4 +1,4 @@
-package com.sclimin.mykit.widget;
+package com.sclimin.mykit.widget.mask;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,14 +22,14 @@ import com.sclimin.mykit.R;
  */
 
 @SuppressLint("ResourceType")
-final class MaskLayerHelper {
+final class MaskDelegate {
     private final View mView;
     private final Drawable mMask;
     private final Paint mPaint;
     private final Xfermode mXfermode;
     private final boolean mShowEditMode;
 
-    MaskLayerHelper(View view, AttributeSet set, int defStyleAttr) {
+    MaskDelegate(View view, AttributeSet set, int defStyleAttr) {
         final Context context = view.getContext();
 
         this.mView = view;

@@ -1,8 +1,8 @@
-package com.sclimin.mykit.widget;
+package com.sclimin.mykit.widget.mask;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
 /**
@@ -10,17 +10,17 @@ import android.util.AttributeSet;
  * <p>
  * 创建时间：2018/08/8
  */
-public class MaskImageView extends AppCompatImageView {
+public class MaskTextView extends AppCompatTextView {
 
-    private final MaskLayerHelper mMaskHelper;
+    private final MaskDelegate mMaskHelper;
 
-    public MaskImageView(Context context, AttributeSet attrs) {
+    public MaskTextView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MaskImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MaskTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mMaskHelper = new MaskLayerHelper(this, attrs, defStyleAttr);
+        mMaskHelper = new MaskDelegate(this, attrs, defStyleAttr);
         mMaskHelper.drawableState(getDrawableState());
     }
 

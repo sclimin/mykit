@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MaskFrameLayout">
+        <attr name="mk_mask" />
+        <attr name="mk_mask_mode" />
+        <attr name="mk_show_edit_mode" />
+    </declare-styleable>
+
+    <declare-styleable name="MaskLinearLayout">
+        <attr name="mk_mask" />
+        <attr name="mk_mask_mode" />
+        <attr name="mk_show_edit_mode" />
+    </declare-styleable>
+
+    <declare-styleable name="MaskRelativeLayout">
+        <attr name="mk_mask" />
+        <attr name="mk_mask_mode" />
+        <attr name="mk_show_edit_mode" />
+    </declare-styleable>
+
+    <declare-styleable name="MaskRecyclerView">
+        <attr name="mk_mask" />
+        <attr name="mk_mask_mode" />
+        <attr name="mk_show_edit_mode" />
+    </declare-styleable>
+
+    <declare-styleable name="MaskButton">
+        <attr name="mk_mask" />
+        <attr name="mk_mask_mode" />
+        <attr name="mk_show_edit_mode" />
+    </declare-styleable>
+
+    <declare-styleable name="MaskImageView">
+        <attr name="mk_mask" />
+        <attr name="mk_mask_mode" />
+        <attr name="mk_show_edit_mode" />
+    </declare-styleable>
+
+    <declare-styleable name="MaskTextView">
+        <attr name="mk_mask" />
+        <attr name="mk_mask_mode" />
+        <attr name="mk_show_edit_mode" />
+    </declare-styleable>
+
+    <declare-styleable name="CornerLinearLayout">
+        <attr name="mk_corner_radius" />
+        <attr name="mk_shadow_size" />
+        <attr name="mk_shadow_color" />
+    </declare-styleable>
+
+    <declare-styleable name="CornerRecyclerView">
+        <attr name="mk_corner_radius" />
+        <attr name="mk_shadow_size" />
+        <attr name="mk_shadow_color" />
+    </declare-styleable>
+
+    <declare-styleable name="CornerRelativeLayout">
+        <attr name="mk_corner_radius" />
+        <attr name="mk_shadow_size" />
+        <attr name="mk_shadow_color" />
+    </declare-styleable>
+
+    <declare-styleable name="CornerFrameLayout">
+        <attr name="mk_corner_radius" />
+        <attr name="mk_shadow_size" />
+        <attr name="mk_shadow_color" />
+    </declare-styleable>
+
+    <declare-styleable name="CornerConstraintLayout">
+        <attr name="mk_corner_radius" />
+        <attr name="mk_shadow_size" />
+        <attr name="mk_shadow_color" />
+    </declare-styleable>
+
+    <declare-styleable name="CornerImageButton">
+        <attr name="mk_corner_radius" />
+        <attr name="mk_shadow_size" />
+        <attr name="mk_shadow_color" />
+    </declare-styleable>
+
+    <declare-styleable name="CornerImageView">
+        <attr name="mk_corner_radius" />
+        <attr name="mk_shadow_size" />
+        <attr name="mk_shadow_color" />
+    </declare-styleable>
+</resources>

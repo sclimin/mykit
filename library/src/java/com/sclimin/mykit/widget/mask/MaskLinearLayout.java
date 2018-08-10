@@ -1,4 +1,4 @@
-package com.sclimin.mykit.widget;
+package com.sclimin.mykit.widget.mask;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,35 +10,35 @@ import android.util.AttributeSet;
  * <p>
  * 创建时间：2018/08/8
  */
-public class LinearLayout extends LinearLayoutCompat {
+public class MaskLinearLayout extends LinearLayoutCompat {
 
-    private final MaskLayerHelper mMaskLayerHelper;
+    private final MaskDelegate mMaskDelegate;
 
-    public LinearLayout(Context context, AttributeSet attrs) {
+    public MaskLinearLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MaskLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mMaskLayerHelper = new MaskLayerHelper(this, attrs, defStyleAttr);
+        mMaskDelegate = new MaskDelegate(this, attrs, defStyleAttr);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int ow, int oh) {
         super.onSizeChanged(w, h, ow, oh);
-        mMaskLayerHelper.sizeChange(w, h);
+        mMaskDelegate.sizeChange(w, h);
     }
 
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        if(mMaskLayerHelper != null) {
-            mMaskLayerHelper.drawableState(getDrawableState());
+        if(mMaskDelegate != null) {
+            mMaskDelegate.drawableState(getDrawableState());
         }
     }
 
     @Override
     public void draw(Canvas canvas) {
-        mMaskLayerHelper.draw(canvas, super::draw);
+        mMaskDelegate.draw(canvas, super::draw);
     }
 }
