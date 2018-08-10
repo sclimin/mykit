@@ -189,7 +189,7 @@ final class CornerDelegate {
         mGradientColors[0] = (as << 24) | color;
         mGradientColors[1] = mGradientColors[0];
         mGradientColors[2] = (am << 24) | color;
-        mGradientColors[3] = 0;
+        mGradientColors[3] = color;
 
         if ((mFixCornerRadius + mShadowSize) > 0) {
             mCornerPaint.setShader(new RadialGradient(

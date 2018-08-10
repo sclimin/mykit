@@ -20,7 +20,8 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         app:mk_shadow_size="10dp"
-        app:mk_corner_radius="100dp">
+        app:mk_shadow_color="#f2ab93"
+        app:mk_corner_radius="13dp">
 
         <View
             android:layout_width="300dp"
