@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -62,7 +63,6 @@ final class CornerDelegate {
     private final Paint mCornerPaint;
 
     private final Path mShadowCornerPath;
-    private final Path mShadowEdgePath;
 
     private float mX0, mY0;
     private float mX1, mY1;
@@ -86,7 +86,6 @@ final class CornerDelegate {
         mCornerPaint = new Paint(paint);
 
         mShadowCornerPath = new Path();
-        mShadowEdgePath = new Path();
 
         mXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
 
@@ -137,7 +136,6 @@ final class CornerDelegate {
     }
 
     private void adjustShadowPath() {
-        mShadowEdgePath.reset();
         mShadowCornerPath.reset();
 
         if (mShadowSize == 0) {
@@ -165,25 +163,10 @@ final class CornerDelegate {
         mXc = outBounds.centerX();
         mYc = outBounds.centerY();
 
-
-        RectF outRectBounds = new RectF(
-                mFixCornerRadius,
-                -mShadowSize,
-                mBounds.width() - mFixCornerRadius,
-                mFixCornerRadius
-        );
-        RectF inRectBounds = new RectF(outRectBounds);
-        inRectBounds.top = 0;
-
-        mShadowEdgePath.reset();
-        mShadowEdgePath.setFillType(Path.FillType.WINDING);
-        mShadowEdgePath.addRect(outRectBounds, Path.Direction.CCW);
-        mShadowEdgePath.addRect(inRectBounds, Path.Direction.CW);
-
         mX0 = 0;
-        mY0 = outRectBounds.bottom;
+        mY0 = mFixCornerRadius;
         mX1 = 0;
-        mY1 = outRectBounds.top;
+        mY1 = -mShadowSize;
 
         mGradientPositions[0] = 0;
         mGradientPositions[1] = mFixCornerRadius / (mFixCornerRadius + mShadowSize);
@@ -225,21 +208,61 @@ final class CornerDelegate {
                     mGradientPositions,
                     Shader.TileMode.CLAMP
             ));
+            mEdgePaint.setAntiAlias(false);
         }
         else {
             mCornerPaint.setShader(null);
             mEdgePaint.setShader(null);
+            mEdgePaint.setAntiAlias(false);
         }
     }
 
     private void drawShadow(Canvas canvas) {
-        for (int i = 0; i < 4; i++) {
-            canvas.save();
-            canvas.rotate(i * 90, mBoundsF.centerX(), mBoundsF.centerY());
-            canvas.drawPath(mShadowCornerPath, mCornerPaint);
-            canvas.drawPath(mShadowEdgePath, mEdgePaint);
-            canvas.restore();
-        }
+        canvas.save();
+        canvas.drawPath(mShadowCornerPath, mCornerPaint);
+        canvas.drawRect(
+                mFixCornerRadius,
+                -mShadowSize,
+                mBoundsF.width() - mFixCornerRadius,
+                0,
+                mEdgePaint);
+        canvas.restore();
+
+        canvas.save();
+        canvas.rotate(90);
+        canvas.translate(0, -mBoundsF.width());
+        canvas.drawPath(mShadowCornerPath, mCornerPaint);
+        canvas.drawRect(
+                mFixCornerRadius,
+                -mShadowSize,
+                mBoundsF.height() - mFixCornerRadius,
+                0,
+                mEdgePaint);
+        canvas.restore();
+
+        canvas.save();
+        canvas.rotate(180);
+        canvas.translate(-mBoundsF.width(), -mBoundsF.height());
+        canvas.drawPath(mShadowCornerPath, mCornerPaint);
+        canvas.drawRect(
+                mFixCornerRadius,
+                -mShadowSize,
+                mBoundsF.width() - mFixCornerRadius,
+                0,
+                mEdgePaint);
+        canvas.restore();
+
+        canvas.save();
+        canvas.rotate(270);
+        canvas.translate(-mBoundsF.height(), 0);
+        canvas.drawPath(mShadowCornerPath, mCornerPaint);
+        canvas.drawRect(
+                mFixCornerRadius,
+                -mShadowSize,
+                mBoundsF.height() - mFixCornerRadius,
+                0,
+                mEdgePaint);
+        canvas.restore();
     }
 
     private void drawMask(Canvas canvas) {
