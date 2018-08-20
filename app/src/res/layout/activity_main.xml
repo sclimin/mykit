@@ -5,29 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:clipChildren="false"
-    android:clipToPadding="false"
     android:fitsSystemWindows="true"
+    android:clipChildren="false"
     tools:context=".MainActivity">
 
-    <com.sclimin.mykit.widget.corner.CornerConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        app:mk_shadow_size="10dp"
-        app:mk_shadow_color="#f2ab93"
-        app:mk_corner_radius="13dp">
-
-        <View
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:background="#FFFF00" />
-
-    </com.sclimin.mykit.widget.corner.CornerConstraintLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

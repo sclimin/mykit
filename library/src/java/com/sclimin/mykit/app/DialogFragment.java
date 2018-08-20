@@ -3,13 +3,24 @@ package com.sclimin.mykit.app;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.ArrayRes;
+import android.support.annotation.BoolRes;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentActivity;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,7 +40,7 @@ import static android.widget.FrameLayout.LayoutParams.MATCH_PARENT;
  * 创建时间：2018/03/19
  * <h2>对话框</h2>
  */
-public abstract class DialogFragment extends android.support.v4.app.DialogFragment {
+public abstract class DialogFragment extends android.support.v4.app.DialogFragment implements SupportResourceHelper {
 
     private FixDialog mDialog;
     private View mView;
@@ -250,5 +261,65 @@ public abstract class DialogFragment extends android.support.v4.app.DialogFragme
                 dismissAllowingStateLoss();
             }
         }
+    }
+
+    public final Resources.Theme getSupportTheme() {
+        return Application.supportResourceHelper.getSupportTheme();
+    }
+
+    public final Resources getSupportResources() {
+        return Application.supportResourceHelper.getSupportResources();
+    }
+
+    public final float getSupportDimension(@DimenRes int id) {
+        return Application.supportResourceHelper.getSupportDimension(id);
+    }
+
+    public final int getSupportDimensionPixelSize(@DimenRes int id) {
+        return Application.supportResourceHelper.getSupportDimensionPixelSize(id);
+    }
+
+    public final int getSupportDimensionPixelOffset(@DimenRes int id) {
+        return Application.supportResourceHelper.getSupportDimensionPixelOffset(id);
+    }
+
+    public final DisplayMetrics getSupportDisplayMetrics() {
+        return Application.supportResourceHelper.getSupportDisplayMetrics();
+    }
+
+    public final Drawable getSupportDrawable(@DrawableRes int id) {
+        return Application.supportResourceHelper.getSupportDrawable(id);
+    }
+
+    public final String getSupportString(@StringRes int id) {
+        return Application.supportResourceHelper.getSupportString(id);
+    }
+
+    public final String getSupportString(@StringRes int id, Object ...formatArgs) {
+        return Application.supportResourceHelper.getSupportString(id, formatArgs);
+    }
+
+    public final String[] getSupportStringArray(@ArrayRes int id) {
+        return Application.supportResourceHelper.getSupportStringArray(id);
+    }
+
+    public final int getSupportColor(int id) {
+        return Application.supportResourceHelper.getSupportColor(id);
+    }
+
+    public final ColorStateList getSupportColorStateList(@ColorRes int id) {
+        return Application.supportResourceHelper.getSupportColorStateList(id);
+    }
+
+    public final boolean getSupportBoolean(@BoolRes int id) {
+        return Application.supportResourceHelper.getSupportBoolean(id);
+    }
+
+    public final int getSupportInteger(@IntegerRes int id) {
+        return Application.supportResourceHelper.getSupportInteger(id);
+    }
+
+    public final int[] getSupportIntArray(@ArrayRes int id) {
+        return Application.supportResourceHelper.getSupportIntArray(id);
     }
 }

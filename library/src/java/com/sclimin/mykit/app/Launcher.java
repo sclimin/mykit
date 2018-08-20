@@ -67,7 +67,7 @@ public abstract class Launcher extends Activity {
         if (cls == null) {
             throw new Error("");
         }
-        Intent intent = new Intent(Application.application, cls);
+        Intent intent = new Intent(Application.getApplication(), cls);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
@@ -118,6 +118,7 @@ public abstract class Launcher extends Activity {
     }
 
     private static class ApplicationPrepare extends Thread {
+
         private final Launcher mLauncher;
 
         ApplicationPrepare(Launcher launcher) {

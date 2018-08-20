@@ -16,4 +16,5 @@ interface CornerView {
     void setShadowColorRes(@ColorRes int colorRes);
     void setShadowSize(float shadowSize);
     void setShadowSizeRes(@DimenRes int shadowSizeRes);
+    void setClipContent(boolean clipContent);
 }

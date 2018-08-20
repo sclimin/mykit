@@ -57,6 +57,11 @@ public class CornerFrameLayout extends FrameLayout implements CornerView {
     }
 
     @Override
+    public void setClipContent(boolean clipContent) {
+        mDelegate.setClipContent(clipContent);
+    }
+
+    @Override
     public void draw(Canvas canvas) {
         mDelegate.draw(canvas, super::draw);
     }

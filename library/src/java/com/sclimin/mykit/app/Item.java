@@ -3,91 +3,45 @@ package com.sclimin.mykit.app;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.BoolRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
+import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 /**
  * 作者：limin
  * <p>
- * 创建时间：2018/03/19
+ * 创建时间：2018/08/14
  */
+public abstract class Item implements SupportResourceHelper {
 
-public abstract class Fragment extends android.support.v4.app.Fragment implements SupportResourceHelper {
+    protected abstract int getItemLayout();
 
-    private View mView;
+    protected abstract void onBind(Adapter adapter, Helper helper, int position);
 
-    private static Handler sHandler = new Handler(Looper.getMainLooper());
+    public static final class Helper {
+        private final View mView;
+        private final SparseArray<View> mCache;
 
-    @Nullable
-    @Override
-    public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        onWillCreateView(savedInstanceState);
-        return inflater.inflate(getLayoutResource(), container, false);
-    }
-
-    protected abstract int getLayoutResource();
-
-    @Override
-    public final void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mView = view;
-        onDidCreateView(view, savedInstanceState);
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public final <T extends View> T findViewById(int id) {
-        if (mView == null) {
-            return null;
+        Helper(View view) {
+            mView = view;
+            mCache = new SparseArray<>();
         }
-        return (T) mView.findViewById(id);
-    }
 
-    protected void onWillCreateView(Bundle savedInstanceState) {
-    }
-
-    protected void onDidCreateView(View view, Bundle savedInstanceState) {
-    }
-
-    public void showToast(String message) {
-        showToast(message, false);
-    }
-
-    public void showToast(String message, boolean isLong) {
-        FragmentActivity activity = getActivity();
-        if (activity != null) {
-            if (activity instanceof Activity) {
-                ((Activity) activity).showToast(message, isLong);
+        public <T extends View> T findViewById(int resId) {
+            View view = mCache.get(resId);
+            if (view == null) {
+                view = mView.findViewById(resId);
+                mCache.put(resId, view);
             }
-            else {
-                activity.runOnUiThread(() -> Toast.makeText(activity, message,
-                        isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show());
-            }
+            return (T) view;
         }
-    }
-
-    public void post(Runnable runnable) {
-        sHandler.post(runnable);
-    }
-
-    public void postDelayed(Runnable runnable, long delayMillis) {
-        sHandler.postDelayed(runnable, delayMillis);
     }
 
     public final Resources.Theme getSupportTheme() {

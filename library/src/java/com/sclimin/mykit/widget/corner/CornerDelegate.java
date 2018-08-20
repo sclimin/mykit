@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -50,6 +49,8 @@ final class CornerDelegate {
      */
     private float mShadowSize;
 
+    private boolean mClipContent;
+
     /**
      * 边界
      */
@@ -92,13 +93,15 @@ final class CornerDelegate {
         final int[] attrs = {
                 R.attr.mk_corner_radius,
                 R.attr.mk_shadow_color,
-                R.attr.mk_shadow_size
+                R.attr.mk_shadow_size,
+                R.attr.mk_clip_content
         };
         TypedArray ta = view.getContext().obtainStyledAttributes(set, attrs, defStyleAttr, 0);
         mCornerRadius = ta.getDimension(0, 0);
         setShadowColor(ta.hasValue(1) ? ta.getColorStateList(1)
                 : ColorStateList.valueOf(Color.BLACK));
         mShadowSize = ta.getDimension(2, 0);
+        mClipContent = ta.getBoolean(3, false);
         ta.recycle();
     }
 
@@ -277,12 +280,11 @@ final class CornerDelegate {
     }
 
     public void draw(Canvas canvas, DrawSuper drawSuper) {
-
         if (mShadowSize != 0) {
             drawShadow(canvas);
         }
 
-        if (mCornerRadius != 0) {
+        if (mCornerRadius != 0 && mClipContent) {
             mMaskPaint.setXfermode(null);
             mMaskPaint.setColor(Color.BLACK);
             int baseCount = canvas.saveLayer(
@@ -318,6 +320,11 @@ final class CornerDelegate {
 
     public void drawableStateChanged() {
         adjustShadowPaint();
+    }
+
+    public void setClipContent(boolean clipContent) {
+        mClipContent = clipContent;
+        mView.postInvalidate();
     }
 
     interface DrawSuper {

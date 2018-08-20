@@ -8,12 +8,29 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.sclimin.mykit.app.Activity;
+import com.sclimin.mykit.app.Item;
+
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
+
+    private final ArrayList<Item> myItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        RecyclerView crc = findViewById(R.id.recycler_view);
+//
+//        for (int i = 0; i < 100; i++) {
+//            if (i % 2 == 0) {
+//                myItems.add(new MyItem());
+//            }
+//            else {
+//                myItems.add(new MyItem2());
+//            }
+//        }
+//
+//        crc.setAdapter(new Adapter(myItems));
     }
 
     @Override
@@ -46,6 +63,6 @@ public class MainActivity extends Activity {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_main;
+        return R.layout.view_ff;
     }
 }

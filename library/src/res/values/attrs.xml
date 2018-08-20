@@ -12,6 +12,10 @@
     </attr>
     <attr name="mk_show_edit_mode" format="boolean"/>
     <attr name="mk_corner_radius" format="dimension" />
+    <attr name="mk_clip_content" format="boolean" />
     <attr name="mk_shadow_size" format="dimension" />
     <attr name="mk_shadow_color" format="color" />
+    <attr name="mk_shadow_x" format="dimension" />
+    <attr name="mk_shadow_y" format="dimension" />
+    <attr name="mk_invalidate_duration" format="integer" />
 </resources>

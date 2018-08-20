@@ -55,6 +55,11 @@ public class CornerConstraintLayout extends ConstraintLayout implements CornerVi
     }
 
     @Override
+    public void setClipContent(boolean clipContent) {
+        mDelegate.setClipContent(clipContent);
+    }
+
+    @Override
     public void draw(Canvas canvas) {
         mDelegate.draw(canvas, super::draw);
     }
