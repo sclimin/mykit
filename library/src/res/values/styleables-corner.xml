@@ -2,64 +2,50 @@
 <resources>
     <declare-styleable name="CornerLinearLayout">
         <attr name="mk_corner_radius" />
-        <attr name="mk_shadow_size" />
         <attr name="mk_shadow_color" />
-        <attr name="mk_shadow_x" />
-        <attr name="mk_shadow_y" />
+        <attr name="mk_shadow_size" />
         <attr name="mk_clip_content" />
     </declare-styleable>
 
     <declare-styleable name="CornerRecyclerView">
         <attr name="mk_corner_radius" />
-        <attr name="mk_shadow_size" />
         <attr name="mk_shadow_color" />
-        <attr name="mk_shadow_x" />
-        <attr name="mk_shadow_y" />
+        <attr name="mk_shadow_size" />
         <attr name="mk_clip_content" />
     </declare-styleable>
 
     <declare-styleable name="CornerRelativeLayout">
         <attr name="mk_corner_radius" />
-        <attr name="mk_shadow_size" />
         <attr name="mk_shadow_color" />
-        <attr name="mk_shadow_x" />
-        <attr name="mk_shadow_y" />
+        <attr name="mk_shadow_size" />
         <attr name="mk_clip_content" />
     </declare-styleable>
 
     <declare-styleable name="CornerFrameLayout">
         <attr name="mk_corner_radius" />
-        <attr name="mk_shadow_size" />
         <attr name="mk_shadow_color" />
-        <attr name="mk_shadow_x" />
-        <attr name="mk_shadow_y" />
+        <attr name="mk_shadow_size" />
         <attr name="mk_clip_content" />
     </declare-styleable>
 
     <declare-styleable name="CornerConstraintLayout">
         <attr name="mk_corner_radius" />
-        <attr name="mk_shadow_size" />
         <attr name="mk_shadow_color" />
-        <attr name="mk_shadow_x" />
-        <attr name="mk_shadow_y" />
+        <attr name="mk_shadow_size" />
         <attr name="mk_clip_content" />
     </declare-styleable>
 
     <declare-styleable name="CornerImageButton">
         <attr name="mk_corner_radius" />
-        <attr name="mk_shadow_size" />
         <attr name="mk_shadow_color" />
-        <attr name="mk_shadow_x" />
-        <attr name="mk_shadow_y" />
+        <attr name="mk_shadow_size" />
         <attr name="mk_clip_content" />
     </declare-styleable>
 
     <declare-styleable name="CornerImageView">
         <attr name="mk_corner_radius" />
-        <attr name="mk_shadow_size" />
         <attr name="mk_shadow_color" />
-        <attr name="mk_shadow_x" />
-        <attr name="mk_shadow_y" />
+        <attr name="mk_shadow_size" />
         <attr name="mk_clip_content" />
     </declare-styleable>
 </resources>
