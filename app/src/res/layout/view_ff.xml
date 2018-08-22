@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false">
 
-    <com.sclimin.sample.Loading
+    <com.sclimin.mykit.widget.corner.CornerLinearLayout
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
@@ -14,10 +14,12 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:mk_invalidate_duration="50" />
+        app:mk_clip_content="true"
+        app:mk_corner_radius="13dp" />
 
 </android.support.constraint.ConstraintLayout>

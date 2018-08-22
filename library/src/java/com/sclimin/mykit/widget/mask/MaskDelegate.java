@@ -1,6 +1,5 @@
 package com.sclimin.mykit.widget.mask;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -21,7 +20,6 @@ import com.sclimin.mykit.R;
  * 创建时间：2018/03/26
  */
 
-@SuppressLint("ResourceType")
 final class MaskDelegate {
     private final View mView;
     private final Drawable mMask;
@@ -35,16 +33,11 @@ final class MaskDelegate {
         this.mView = view;
         view.setWillNotDraw(false);
 
-        final int[] attrs = {
-                R.attr.mk_mask,
-                R.attr.mk_mask_mode,
-                R.attr.mk_show_edit_mode
-        };
-
-        TypedArray ta = context.obtainStyledAttributes(set, attrs, defStyleAttr, 0);
-        this.mMask = ta.getDrawable(0);
-        int maskMode = ta.getInt(1, -1);
-        mShowEditMode = ta.getBoolean(2, false);
+        TypedArray ta = context.obtainStyledAttributes(set,
+                R.styleable.MaskDelegate, defStyleAttr, 0);
+        this.mMask = ta.getDrawable(R.styleable.MaskDelegate_mk_mask);
+        int maskMode = ta.getInt(R.styleable.MaskDelegate_mk_mask_mode, -1);
+        mShowEditMode = ta.getBoolean(R.styleable.MaskDelegate_mk_show_edit_mode, false);
         ta.recycle();
 
         switch (maskMode) {

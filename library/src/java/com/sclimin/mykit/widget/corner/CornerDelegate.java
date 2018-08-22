@@ -20,6 +20,8 @@ import android.view.View;
 
 import com.sclimin.mykit.R;
 
+import java.util.Arrays;
+
 /**
  * 作者：limin
  * <p>
@@ -72,7 +74,6 @@ final class CornerDelegate {
     private final float[] mGradientPositions = new float[4];
     private final int[] mGradientColors = new int[4];
 
-    @SuppressLint("ResourceType")
     CornerDelegate(View view, AttributeSet set, int defStyleAttr) {
         mView = view;
         mView.setWillNotDraw(false);
@@ -90,18 +91,15 @@ final class CornerDelegate {
 
         mXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
 
-        final int[] attrs = {
-                R.attr.mk_corner_radius,
-                R.attr.mk_shadow_color,
-                R.attr.mk_shadow_size,
-                R.attr.mk_clip_content
-        };
-        TypedArray ta = view.getContext().obtainStyledAttributes(set, attrs, defStyleAttr, 0);
-        mCornerRadius = ta.getDimension(0, 0);
-        setShadowColor(ta.hasValue(1) ? ta.getColorStateList(1)
+        TypedArray ta = view.getContext().obtainStyledAttributes(set,
+                R.styleable.CornerDelegate, defStyleAttr, 0);
+        mCornerRadius = ta.getDimension(
+                R.styleable.CornerDelegate_mk_corner_radius, 0);
+        setShadowColor(ta.hasValue(R.styleable.CornerDelegate_mk_shadow_color) ?
+                ta.getColorStateList(R.styleable.CornerDelegate_mk_shadow_color)
                 : ColorStateList.valueOf(Color.BLACK));
-        mShadowSize = ta.getDimension(2, 0);
-        mClipContent = ta.getBoolean(3, false);
+        mShadowSize = ta.getDimension(R.styleable.CornerDelegate_mk_shadow_size, 0);
+        mClipContent = ta.getBoolean(R.styleable.CornerDelegate_mk_clip_content, false);
         ta.recycle();
     }
 

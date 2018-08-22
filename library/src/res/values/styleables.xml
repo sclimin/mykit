@@ -3,4 +3,17 @@
     <declare-styleable name="LoadingView">
         <attr name="mk_invalidate_duration" />
     </declare-styleable>
+
+    <declare-styleable name="CornerDelegate">
+        <attr name="mk_corner_radius" />
+        <attr name="mk_shadow_color" />
+        <attr name="mk_shadow_size" />
+        <attr name="mk_clip_content" />
+    </declare-styleable>
+
+    <declare-styleable name="MaskDelegate">
+        <attr name="mk_mask" />
+        <attr name="mk_mask_mode" />
+        <attr name="mk_show_edit_mode" />
+    </declare-styleable>
 </resources>
