@@ -43,7 +43,7 @@ public abstract class Item implements SupportResourceHelper {
             return (T) view;
         }
 
-        public final View getItemView() {
+        public View getItemView() {
             return mView;
         }
     }
