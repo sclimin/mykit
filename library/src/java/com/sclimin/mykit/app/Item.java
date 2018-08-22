@@ -42,6 +42,10 @@ public abstract class Item implements SupportResourceHelper {
             }
             return (T) view;
         }
+
+        public final View getItemView() {
+            return mView;
+        }
     }
 
     public final Resources.Theme getSupportTheme() {
