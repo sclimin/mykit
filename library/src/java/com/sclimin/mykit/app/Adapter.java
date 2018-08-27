@@ -13,7 +13,7 @@ import java.util.List;
  * <p>
  * 创建时间：2018/08/14
  */
-public abstract class Adapter extends RecyclerView.Adapter<Adapter.MKViewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.MKViewHolder> implements MainThreadHelper {
 
     private final List<? extends Item> mItems;
 
@@ -43,6 +43,21 @@ public abstract class Adapter extends RecyclerView.Adapter<Adapter.MKViewHolder>
     @Override
     public final int getItemViewType(int position) {
         return mItems.get(position).getItemLayout();
+    }
+
+    @Override
+    public final void post(Runnable runnable) {
+        Application.post(runnable);
+    }
+
+    @Override
+    public final void postDelayed(Runnable runnable, long delayMillis) {
+        Application.postDelayed(runnable, delayMillis);
+    }
+
+    @Override
+    public final boolean isMainThread() {
+        return Application.isMainThread();
     }
 
     static final class MKViewHolder extends RecyclerView.ViewHolder {

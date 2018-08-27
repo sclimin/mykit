@@ -16,11 +16,19 @@ public abstract class Launcher extends Activity {
 
     static ApplicationPrepare mPrepared;
 
+    static Launcher sCurrentLauncher;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        synchronized (Application.createLock) {
 
-        synchronized (Application.LOCKER) {
+            if (sCurrentLauncher != null && sCurrentLauncher != this) {
+                sCurrentLauncher.finish();
+                sCurrentLauncher = null;
+            }
+            sCurrentLauncher = this;
+
             if (!Application.isCreated) {
                 if (mPrepared == null) {
                     mPrepared = new ApplicationPrepare();
@@ -43,6 +51,12 @@ public abstract class Launcher extends Activity {
     }
 
     protected abstract void onNext();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sCurrentLauncher = null;
+    }
 
     @Override
     public void onBackPressed() {
@@ -69,7 +83,7 @@ public abstract class Launcher extends Activity {
         @Override
         public void run() {
             Application.application.onPrepare();
-            synchronized (Application.LOCKER) {
+            synchronized (Application.createLock) {
                 Application.isCreated = true;
                 mPrepared = null;
                 Launcher launcher = mLauncher.get();

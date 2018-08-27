@@ -40,7 +40,8 @@ import static android.widget.FrameLayout.LayoutParams.MATCH_PARENT;
  * 创建时间：2018/03/19
  * <h2>对话框</h2>
  */
-public abstract class DialogFragment extends android.support.v4.app.DialogFragment implements SupportResourceHelper {
+public abstract class DialogFragment extends android.support.v4.app.DialogFragment implements
+        SupportResourceHelper, MainThreadHelper {
 
     private FixDialog mDialog;
     private View mView;
@@ -261,6 +262,21 @@ public abstract class DialogFragment extends android.support.v4.app.DialogFragme
                 dismissAllowingStateLoss();
             }
         }
+    }
+
+    @Override
+    public final void post(Runnable runnable) {
+        Application.post(runnable);
+    }
+
+    @Override
+    public final void postDelayed(Runnable runnable, long delayMillis) {
+        Application.postDelayed(runnable, delayMillis);
+    }
+
+    @Override
+    public final boolean isMainThread() {
+        return Application.isMainThread();
     }
 
     public final Resources.Theme getSupportTheme() {

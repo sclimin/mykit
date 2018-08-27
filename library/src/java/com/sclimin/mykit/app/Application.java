@@ -8,6 +8,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.BoolRes;
 import android.support.annotation.ColorRes;
@@ -33,9 +35,23 @@ public class Application extends MultiDexApplication {
     static Application application;
     static SupportResourceHelper supportResourceHelper;
     static boolean isCreated;
-    static final Object LOCKER = new Object();
+    static final Object createLock = new Object();
 
     private ActivityManager activityManager;
+
+    private static final Handler mainHandler = new Handler(Looper.getMainLooper());
+
+    public static boolean isMainThread() {
+        return Looper.getMainLooper().getThread().getId() == Thread.currentThread().getId();
+    }
+
+    public static void post(Runnable runnable) {
+        Application.mainHandler.post(runnable);
+    }
+
+    public static void postDelayed(Runnable runnable, long delayMillis) {
+        Application.mainHandler.postDelayed(runnable, delayMillis);
+    }
 
     @Override
     public void onCreate() {

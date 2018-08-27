@@ -1,11 +1,17 @@
 package com.sclimin.mykit.app;
 
-import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -18,11 +24,12 @@ import com.sclimin.mykit.R;
  * 创建时间：2018/03/16
  */
 
-public abstract class Activity extends AppCompatActivity {
+public abstract class Activity extends AppCompatActivity implements MainThreadHelper {
 
     private static final String TAG_BAR = "TAG_TOOL_BAR";
 
     private FrameLayout mToolbarContainer;
+    private NavigationBarHelper mHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +38,15 @@ public abstract class Activity extends AppCompatActivity {
         final Window window = getWindow();
         onConfigurationWindow(window);
 
-        synchronized (Application.LOCKER) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            mHelper = new NavigationBarHelper(window);
+
+            if (mHelper.update()) {
+                onAdjustNavigationBar(mHelper);
+            }
+        }
+
+        synchronized (Application.createLock) {
             if (!Application.isCreated && onCheckApplicationInit()) {
                 Application.application.getActivityManager().restart();
                 return;
@@ -59,6 +74,9 @@ public abstract class Activity extends AppCompatActivity {
         mToolbarContainer = findViewById(R.id.toolbar_container);
     }
 
+    protected void onAdjustNavigationBar(NavigationBarHelper helper) {
+    }
+
     protected abstract int getLayoutResource();
 
     protected void onConfigurationWindow(Window window) {
@@ -69,18 +87,14 @@ public abstract class Activity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-    }
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        if (mHelper != null && Build.VERSION.SDK_INT >= 21) {
+            if (mHelper.update()) {
+                onAdjustNavigationBar(mHelper);
+            }
+        }
     }
 
     protected final boolean hasToolbarContainer() {
@@ -123,5 +137,101 @@ public abstract class Activity extends AppCompatActivity {
     }
 
     protected void onDialogDismiss(DialogFragment dialog) {
+    }
+
+    @Override
+    public final void post(Runnable runnable) {
+        Application.post(runnable);
+    }
+
+    @Override
+    public final void postDelayed(Runnable runnable, long delayMillis) {
+        Application.postDelayed(runnable, delayMillis);
+    }
+
+    @Override
+    public final boolean isMainThread() {
+        return Application.isMainThread();
+    }
+
+    public static final class NavigationBarHelper {
+        private final Window mWindow;
+        private final DisplayMetrics mRealMetrics;
+        private final Rect mRect;
+        private final Rect mTempRect;
+
+        private int mNavigationBarSize;
+        private Direction mDirection;
+
+        private NavigationBarHelper(Window window) {
+            this.mWindow = window;
+            this.mRealMetrics = new DisplayMetrics();
+            this.mRect = new Rect();
+            this.mTempRect = new Rect();
+        }
+
+        @RequiresApi(21)
+        boolean update() {
+            Display display = mWindow.getWindowManager().getDefaultDisplay();
+            display.getRectSize(mTempRect);
+            display.getRealMetrics(mRealMetrics);
+
+            boolean isPortrait = mTempRect.width() <= mTempRect.height();
+
+            Direction direction;
+
+            if (mTempRect.width() != mRealMetrics.widthPixels || mTempRect.height() != mRealMetrics.heightPixels) {
+                if (mTempRect.width() != mRealMetrics.widthPixels) {
+                    // 水平方向上显示
+                    mNavigationBarSize = mRealMetrics.widthPixels - mTempRect.width();
+                    direction = mTempRect.left != 0 ? Direction.Left : Direction.Right;
+                }
+                else {
+                    // 垂直方向上显示
+                    mNavigationBarSize = mRealMetrics.heightPixels - mTempRect.height();
+                    direction = mTempRect.top != 0 ? Direction.Top : Direction.Bottom;
+                }
+            }
+            else {
+                mNavigationBarSize = 0;
+                direction = null;
+            }
+
+            boolean shouldUpdate = mDirection != direction || mRect.isEmpty();
+
+            mDirection = direction;
+            mRect.set(mTempRect);
+
+            return shouldUpdate;
+        }
+
+        public boolean isNavigationBarShowing() {
+            return mNavigationBarSize != 0;
+        }
+
+        public int getNavigationBarSize() {
+            return mNavigationBarSize;
+        }
+
+        public Direction getDirection() {
+            return mDirection;
+        }
+
+        public enum Direction {
+            Left(Gravity.LEFT),
+            Right(Gravity.RIGHT),
+            Top(Gravity.TOP),
+            Bottom(Gravity.BOTTOM);
+
+            private final int value;
+
+            Direction(int value) {
+                this.value = value;
+            }
+
+            public int gravity() {
+                return value;
+            }
+        }
     }
 }

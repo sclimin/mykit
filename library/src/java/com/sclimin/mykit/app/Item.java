@@ -19,7 +19,7 @@ import android.view.View;
  * <p>
  * 创建时间：2018/08/14
  */
-public abstract class Item implements SupportResourceHelper {
+public abstract class Item implements SupportResourceHelper, MainThreadHelper {
 
     protected abstract int getItemLayout();
 
@@ -46,6 +46,21 @@ public abstract class Item implements SupportResourceHelper {
         public View getItemView() {
             return mView;
         }
+    }
+
+    @Override
+    public final void post(Runnable runnable) {
+        Application.post(runnable);
+    }
+
+    @Override
+    public final void postDelayed(Runnable runnable, long delayMillis) {
+        Application.postDelayed(runnable, delayMillis);
+    }
+
+    @Override
+    public final boolean isMainThread() {
+        return Application.isMainThread();
     }
 
     public final Resources.Theme getSupportTheme() {

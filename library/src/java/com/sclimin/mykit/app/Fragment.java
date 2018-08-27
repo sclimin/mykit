@@ -4,8 +4,6 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.BoolRes;
 import android.support.annotation.ColorRes;
@@ -28,11 +26,9 @@ import android.widget.Toast;
  * 创建时间：2018/03/19
  */
 
-public abstract class Fragment extends android.support.v4.app.Fragment implements SupportResourceHelper {
+public abstract class Fragment extends android.support.v4.app.Fragment implements SupportResourceHelper, MainThreadHelper {
 
     private View mView;
-
-    private static Handler sHandler = new Handler(Looper.getMainLooper());
 
     @Nullable
     @Override
@@ -82,12 +78,19 @@ public abstract class Fragment extends android.support.v4.app.Fragment implement
         }
     }
 
-    public void post(Runnable runnable) {
-        sHandler.post(runnable);
+    @Override
+    public final void post(Runnable runnable) {
+        Application.post(runnable);
     }
 
-    public void postDelayed(Runnable runnable, long delayMillis) {
-        sHandler.postDelayed(runnable, delayMillis);
+    @Override
+    public final void postDelayed(Runnable runnable, long delayMillis) {
+        Application.postDelayed(runnable, delayMillis);
+    }
+
+    @Override
+    public final boolean isMainThread() {
+        return Application.isMainThread();
     }
 
     public final Resources.Theme getSupportTheme() {
