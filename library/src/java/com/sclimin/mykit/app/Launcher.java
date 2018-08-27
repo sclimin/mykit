@@ -82,13 +82,56 @@ public abstract class Launcher extends Activity {
 
         @Override
         public void run() {
+            Sync willPrepare = new Sync(Application.application::onWillPrepare);
+            Application.post(willPrepare);
+            willPrepare.waitFinish();
+
             Application.application.onPrepare();
+
+            Sync didPrepare = new Sync(Application.application::onDidPrepared);
+            Application.post(didPrepare);
+            didPrepare.waitFinish();
+
             synchronized (Application.createLock) {
                 Application.isCreated = true;
                 mPrepared = null;
                 Launcher launcher = mLauncher.get();
                 if (launcher != null) {
                     launcher.runOnUiThread(launcher::onNext);
+                }
+            }
+        }
+    }
+
+    private static class Sync implements Runnable {
+
+        private final Object mLock = new Object();
+        private boolean mFinish;
+        private final Runnable mRunnable;
+
+        Sync(Runnable runnable) {
+            mRunnable = runnable;
+        }
+
+        @Override
+        public void run() {
+            if (mRunnable != null) {
+                mRunnable.run();
+            }
+            synchronized (mLock) {
+                mFinish = true;
+                mLock.notifyAll();
+            }
+        }
+
+        void waitFinish() {
+            synchronized (mLock) {
+                while (!mFinish) {
+                    try {
+                        mLock.wait();
+                    }
+                    catch (InterruptedException ignored) {
+                    }
                 }
             }
         }

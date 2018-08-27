@@ -16,6 +16,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.MainThread;
 import android.support.annotation.StringRes;
 import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
@@ -66,7 +67,24 @@ public class Application extends MultiDexApplication {
         return application;
     }
 
+    /**
+     * 准备前，主线程
+     */
+    @MainThread
+    protected void onWillPrepare() {
+    }
+
+    /**
+     * 准备线程，准备线程
+     */
     protected void onPrepare() {
+    }
+
+    /**
+     * 准备后，主线程
+     */
+    @MainThread
+    protected void onDidPrepared() {
     }
 
     ActivityManager getActivityManager() {
