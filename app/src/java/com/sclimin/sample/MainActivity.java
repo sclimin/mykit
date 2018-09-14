@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 //            }
 //        }
 //
-//        crc.setAdapter(new Adapter(myItems));
+//        crc.setAdapter(new RecyclerAdapter(myItems));
     }
 
     @Override
