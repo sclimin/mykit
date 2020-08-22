@@ -1,8 +1,8 @@
 package com.sclimin.mykit.widget.corner;
 
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DimenRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
 
 /**
  * 作者：limin

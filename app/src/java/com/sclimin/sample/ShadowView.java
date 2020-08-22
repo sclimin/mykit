@@ -2,13 +2,12 @@ package com.sclimin.sample;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.support.graphics.drawable.VectorDrawableCompat;
+import androidx.annotation.Nullable;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import android.util.AttributeSet;
 import android.view.View;
 

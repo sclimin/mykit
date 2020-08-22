@@ -10,15 +10,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.ArrayRes;
-import android.support.annotation.BoolRes;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DimenRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IntegerRes;
-import android.support.annotation.MainThread;
-import android.support.annotation.StringRes;
-import android.support.multidex.MultiDexApplication;
+import androidx.annotation.ArrayRes;
+import androidx.annotation.BoolRes;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IntegerRes;
+import androidx.annotation.MainThread;
+import androidx.annotation.StringRes;
+import androidx.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
 
 import java.util.LinkedList;
@@ -126,7 +126,7 @@ public class Application extends MultiDexApplication {
             intent.setPackage(application.getPackageName());
             List<ResolveInfo> resolveInfos = application.getPackageManager()
                     .queryIntentActivities(intent, 0);
-            if (resolveInfos == null || resolveInfos.isEmpty()) {
+            if (resolveInfos.isEmpty()) {
                 throw new Error("");
             }
 

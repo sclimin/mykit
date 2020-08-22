@@ -2,7 +2,7 @@ package com.sclimin.mykit.widget.mask;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.AttributeSet;
 
 /**

@@ -4,17 +4,19 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.sclimin.mykit.R;
 
@@ -110,16 +112,16 @@ public abstract class Activity extends AppCompatActivity implements MainThreadHe
     }
 
     public Bar currBar() {
-        android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_BAR);
-        if (fragment != null && (fragment instanceof Bar)) {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_BAR);
+        if (fragment instanceof Bar) {
             return (Bar) fragment;
         }
         return null;
     }
 
     public void clearBar() {
-        android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_BAR);
-        if (fragment != null && (fragment instanceof Bar)) {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_BAR);
+        if (fragment instanceof Bar) {
             getSupportFragmentManager().beginTransaction()
                     .remove(fragment)
                     .commitAllowingStateLoss();

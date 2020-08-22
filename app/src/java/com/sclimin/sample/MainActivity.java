@@ -63,6 +63,6 @@ public class MainActivity extends Activity {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.view_ff;
+        return R.layout.activity_main;
     }
 }
